@@ -80,6 +80,8 @@ async def on_reaction_add(reaction, user):
                 await message.channel.send("Scrim finished.")
                 if message in pastScrimMessages:
                     pastScrimMessages.remove(message)
+                else:
+                    scrimMessages.remove(message)
 
 
 @tasks.loop(seconds=3)
