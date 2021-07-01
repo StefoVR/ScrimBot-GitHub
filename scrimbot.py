@@ -29,8 +29,17 @@ async def add(ctx, scrimTime):
         return
 
     if scrimTime in timeList:
+        # generate fancy timestamp
+        time = dt.datetime.now()
+        if int(scrimTime.split(":")[0]) < time.hour:
+            day = time.day
+        else:
+            day = time.day+1
+        scrimDate = dt.datetime(time.year, time.month, day, int(scrimTime.split(":")[0]),
+                                int(scrimTime.split(":")[1]), 0, 0)
+        unix = int(scrimDate.timestamp())
         # Send the message and reactions.
-        message = await ctx.send("New scrim at " + scrimTime + ".")
+        message = await ctx.send("New scrim at " + scrimTime + "<t:" + str(unix)+":R>" + ".")
         await message.add_reaction("👍")
         await message.add_reaction("🇷")
         await message.add_reaction("⏭️")
